@@ -4,10 +4,11 @@
 #
 
 # https://hg.nginx.org/nginx-quic/file/tip/src/core/nginx.h
-ARG NGINX_VERSION=1.21.4
+ARG NGINX_VERSION=1.23.0
 
 # https://hg.nginx.org/nginx-quic/shortlog/quic
-ARG NGINX_COMMIT=d041b8d6ab0b
+ARG NGINX_COMMIT=8d0753760546
+# Wed, 22 Jun 2022 18:34:58 +0400
 
 # https://github.com/google/ngx_brotli
 ARG NGX_BROTLI_COMMIT=9aec15e2aa6feea2113119ba06460af70ab3ea62
@@ -67,7 +68,7 @@ ARG CONFIG="\
 		--with-http_v2_module \
 		--with-http_v3_module \
 		--add-module=/usr/src/ngx_brotli \
-		--add-module=/usr/src/headers-more-nginx-module-$HEADERS_MORE_VERSION \
+		--add-module=/usr/src/headers-more-nginx-module \
 	"
 
 FROM alpine:latest AS base
@@ -140,8 +141,9 @@ RUN \
 RUN \
   echo "Downloading headers-more-nginx-module ..." \
   && cd /usr/src \
-  && wget https://github.com/openresty/headers-more-nginx-module/archive/refs/tags/v${HEADERS_MORE_VERSION}.tar.gz -O headers-more-nginx-module.tar.gz \
-  && tar -xf headers-more-nginx-module.tar.gz
+  #&& wget https://github.com/openresty/headers-more-nginx-module/archive/refs/tags/v${HEADERS_MORE_VERSION}.tar.gz -O headers-more-nginx-module.tar.gz \
+  #&& tar -xf headers-more-nginx-module.tar.gz
+  && git clone https://github.com/openresty/headers-more-nginx-module.git
 
 RUN \
   echo "Building nginx ..." \
