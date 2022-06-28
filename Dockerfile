@@ -11,10 +11,12 @@ ARG NGINX_COMMIT=8d0753760546
 # Wed, 22 Jun 2022 18:34:58 +0400
 
 # https://github.com/google/ngx_brotli
-ARG NGX_BROTLI_COMMIT=9aec15e2aa6feea2113119ba06460af70ab3ea62
+ARG NGX_BROTLI_COMMIT=6e975bcb015f62e1f303054897783355e2a877dc
+# 29 April 2022 14:10 MESZ
 
 # https://github.com/google/boringssl
-ARG BORINGSSL_COMMIT=123eaaef26abc278f53ae338e9c758eb01c70b08
+ARG BORINGSSL_COMMIT=c239ffd0552179f358de31517391679e9b62ccd3
+# 25 June 2022 23:43 MESZ
 
 # https://github.com/openresty/headers-more-nginx-module/tags
 ARG HEADERS_MORE_VERSION=0.33
@@ -94,7 +96,7 @@ RUN \
 		zlib-dev \
 		linux-headers \
 		curl \
-		gnupg1 \
+		gnupg \
 		libxslt-dev \
 		gd-dev \
 		geoip-dev \
