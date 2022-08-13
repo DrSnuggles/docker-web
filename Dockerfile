@@ -4,22 +4,23 @@
 #
 
 # https://hg.nginx.org/nginx-quic/file/tip/src/core/nginx.h
-ARG NGINX_VERSION=1.23.0
+ARG NGINX_VERSION=1.23.1
 
 # https://hg.nginx.org/nginx-quic/shortlog/quic
-ARG NGINX_COMMIT=8d0753760546
-# Wed, 22 Jun 2022 18:34:58 +0400
+ARG NGINX_COMMIT=f9d7930d0eed
+# Wed, 03 Aug 2022 16:59:51 +0400
 
 # https://github.com/google/ngx_brotli
 ARG NGX_BROTLI_COMMIT=6e975bcb015f62e1f303054897783355e2a877dc
 # 29 April 2022 14:10 MESZ
 
 # https://github.com/google/boringssl
-ARG BORINGSSL_COMMIT=c239ffd0552179f358de31517391679e9b62ccd3
-# 25 June 2022 23:43 MESZ
+ARG BORINGSSL_COMMIT=401137fec2fd855ceed7931f15a623d3cb18efdc
+# 12 Aug 2022 22:14 MESZ
 
 # https://github.com/openresty/headers-more-nginx-module/tags
-ARG HEADERS_MORE_VERSION=0.33
+ARG HEADERS_MORE_VERSION=0.34
+# will clone from master git anyway
 
 # https://hg.nginx.org/nginx-quic/file/quic/README#l72
 ARG CONFIG="\
