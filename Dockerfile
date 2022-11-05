@@ -4,19 +4,19 @@
 #
 
 # https://hg.nginx.org/nginx-quic/file/tip/src/core/nginx.h
-ARG NGINX_VERSION=1.23.1
+ARG NGINX_VERSION=1.23.3
 
 # https://hg.nginx.org/nginx-quic/shortlog/quic
-ARG NGINX_COMMIT=f9d7930d0eed
-# Wed, 03 Aug 2022 16:59:51 +0400
+ARG NGINX_COMMIT=3be953161026
+# Thu, 20 Oct 2022 16:41:36 +0400
 
 # https://github.com/google/ngx_brotli
 ARG NGX_BROTLI_COMMIT=6e975bcb015f62e1f303054897783355e2a877dc
 # 29 April 2022 14:10 MESZ
 
 # https://github.com/google/boringssl
-ARG BORINGSSL_COMMIT=401137fec2fd855ceed7931f15a623d3cb18efdc
-# 12 Aug 2022 22:14 MESZ
+ARG BORINGSSL_COMMIT=10458977f6a803859808365fad071731369f655a
+# Nov 2, 2022
 
 # https://github.com/openresty/headers-more-nginx-module/tags
 ARG HEADERS_MORE_VERSION=0.34
@@ -72,6 +72,7 @@ ARG CONFIG="\
 		--with-http_v3_module \
 		--add-module=/usr/src/ngx_brotli \
 		--add-module=/usr/src/headers-more-nginx-module \
+		--add-module=/usr/src/njs/nginx \
 	"
 
 FROM alpine:latest AS base
@@ -115,6 +116,10 @@ WORKDIR /usr/src/
 RUN \
 	echo "Cloning nginx $NGINX_VERSION (rev $NGINX_COMMIT from 'quic' branch) ..." \
 	&& hg clone -b quic --rev $NGINX_COMMIT https://hg.nginx.org/nginx-quic /usr/src/nginx-$NGINX_VERSION
+
+RUN \
+	echo "Cloning njs ..." \
+	&& hg clone https://hg.nginx.org/njs /usr/src/njs
 
 RUN \
 	echo "Cloning brotli $NGX_BROTLI_COMMIT ..." \
@@ -195,6 +200,7 @@ COPY --from=base /usr/sbin/nginx /usr/sbin/
 COPY --from=base /usr/local/lib/perl5/site_perl /usr/local/lib/perl5/site_perl
 COPY --from=base /usr/bin/envsubst /usr/local/bin/envsubst
 COPY --from=base /etc/ssl/dhparam.pem /etc/ssl/dhparam.pem
+COPY --from=base /usr/src/njs /usr/src/njs
 
 RUN \
 	addgroup -S nginx \
