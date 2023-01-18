@@ -4,19 +4,19 @@
 #
 
 # https://hg.nginx.org/nginx-quic/file/tip/src/core/nginx.h
-ARG NGINX_VERSION=1.23.3
+ARG NGINX_VERSION=1.23.4
 
 # https://hg.nginx.org/nginx-quic/shortlog/quic
-ARG NGINX_COMMIT=3be953161026
-# Thu, 20 Oct 2022 16:41:36 +0400
+ARG NGINX_COMMIT=03897c45798e
+# 18 Jan 2023
 
 # https://github.com/google/ngx_brotli
 ARG NGX_BROTLI_COMMIT=6e975bcb015f62e1f303054897783355e2a877dc
 # 29 April 2022 14:10 MESZ
 
 # https://github.com/google/boringssl
-ARG BORINGSSL_COMMIT=10458977f6a803859808365fad071731369f655a
-# Nov 2, 2022
+ARG BORINGSSL_COMMIT=114fa727b7281bf532d037036356359619c730be
+# 18 Jan 2023
 
 # https://github.com/openresty/headers-more-nginx-module/tags
 ARG HEADERS_MORE_VERSION=0.34
@@ -75,7 +75,9 @@ ARG CONFIG="\
 		--add-module=/usr/src/njs/nginx \
 	"
 
-FROM alpine:latest AS base
+#FROM alpine:latest AS base
+# latest breaks libunwind in BoringSSL but 3.17.1 works
+FROM alpine:3.17.1 AS base
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 ARG NGINX_VERSION
@@ -83,6 +85,9 @@ ARG NGINX_COMMIT
 ARG NGX_BROTLI_COMMIT
 ARG HEADERS_MORE_VERSION
 ARG CONFIG
+
+RUN \
+	apk update && apk upgrade
 
 RUN \
 	apk add --no-cache --virtual .build-deps \
@@ -138,6 +143,9 @@ RUN \
   && cd boringssl \
   && git checkout $BORINGSSL_COMMIT
 
+#RUN \
+#	go get -u golang.org/x/text@v0.5.0 && go mod download golang.org/x/text
+
 RUN \
   echo "Building boringssl ..." \
   && cd /usr/src/boringssl \
@@ -192,6 +200,9 @@ ARG NGINX_COMMIT
 
 ENV NGINX_VERSION $NGINX_VERSION
 ENV NGINX_COMMIT $NGINX_COMMIT
+
+RUN \
+	apk update && apk upgrade
 
 COPY --from=base /tmp/runDeps.txt /tmp/runDeps.txt
 COPY --from=base /etc/nginx /etc/nginx
