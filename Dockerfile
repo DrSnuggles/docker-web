@@ -4,19 +4,19 @@
 #
 
 # https://hg.nginx.org/nginx-quic/file/tip/src/core/nginx.h
-ARG NGINX_VERSION=1.23.4
-
 # https://hg.nginx.org/nginx-quic/shortlog/quic
-ARG NGINX_COMMIT=03897c45798e
-# 18 Jan 2023
+# https://hg.nginx.org/nginx-quic
+ARG NGINX_VERSION=1.23.4
+ARG NGINX_COMMIT=8347620e0e76
+# 11 Apr 2023 (latest 1.23.4)
 
 # https://github.com/google/ngx_brotli
 ARG NGX_BROTLI_COMMIT=6e975bcb015f62e1f303054897783355e2a877dc
-# 29 April 2022 14:10 MESZ
+# 29 Apr 2022
 
 # https://github.com/google/boringssl
-ARG BORINGSSL_COMMIT=114fa727b7281bf532d037036356359619c730be
-# 18 Jan 2023
+ARG BORINGSSL_COMMIT=9939e14cffc66f9b9f3374fb52c97bd8bfb0bfbe
+# 29 Apr 2023
 
 # https://github.com/openresty/headers-more-nginx-module/tags
 ARG HEADERS_MORE_VERSION=0.34
@@ -75,9 +75,7 @@ ARG CONFIG="\
 		--add-module=/usr/src/njs/nginx \
 	"
 
-#FROM alpine:latest AS base
-# latest breaks libunwind in BoringSSL but 3.17.1 works
-FROM alpine:3.17.1 AS base
+FROM alpine:latest AS base
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 ARG NGINX_VERSION
