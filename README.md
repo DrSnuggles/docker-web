@@ -1,4 +1,9 @@
-# Docker - Web
+# Docker - Web **CLOSED**
+
+# **CLOSED -- CLOSED -- CLOSED -- CLOSED -- CLOSED**
+8 days ago QUIC branch found it's way into mainline.
+
+No need to continue. Thanks for watching!
 
 ## Why another
 - Learn, Improve, Maintain, Backup, ...
@@ -8,6 +13,7 @@
 - Alpine
 - NGInx
 - QUIC + HTTP/3
+- NJS
 - ngx_header_more
 - BoringSSL
 - Mozilla SSL config
